@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header.component';
+import { IndexComponent } from './index.component';
 
 import {
   FontAwesomeModule,
@@ -13,13 +14,14 @@ import {
   faPlus,
   faUser,
   faSignOutAlt,
+  faSignInAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent, HeaderComponent, IndexComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,6 +38,6 @@ import { environment } from '../environments/environment';
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faPlus, faUser, faSignOutAlt);
+    library.addIcons(faPlus, faUser, faSignOutAlt, faSignInAlt);
   }
 }

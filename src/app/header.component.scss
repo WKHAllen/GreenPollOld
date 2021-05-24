@@ -1,7 +1,6 @@
 @use '../styles';
 
 .header {
-  flex: 0 1 auto;
   padding: 16px;
   background-color: styles.$primary-color;
   display: flex;
@@ -9,7 +8,7 @@
   align-items: center;
 
   * {
-    color: styles.$secondary-color;
+    color: styles.$primary-as-bg-text-color;
   }
 
   a {

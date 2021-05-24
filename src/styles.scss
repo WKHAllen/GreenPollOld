@@ -1,5 +1,7 @@
 $primary-color: #00aa17;
-$secondary-color: #fafafa;
+$secondary-color: white;
+$primary-as-bg-text-color: white;
+$secondary-as-bg-text-color: black;
 
 html,
 body {
@@ -15,4 +17,48 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $secondary-color;
+}
+
+@mixin centerer($horizontal: true, $vertical: true) {
+  position: absolute;
+  @if ($horizontal and $vertical) {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } @else if ($horizontal) {
+    left: 50%;
+    transform: translate(-50%, 0);
+  } @else if ($vertical) {
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}
+
+@mixin full-center {
+  @include centerer(true, true);
+}
+
+@mixin button($bg-color, $color) {
+  background-color: $bg-color;
+  color: $color;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 4px;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: darken($bg-color, 5%);
+  }
+
+  &:active {
+    background-color: darken($bg-color, 8%);
+  }
+}
+
+.button-primary {
+  @include button($primary-color, $primary-as-bg-text-color);
+}
+
+.button-secondary {
+  @include button($secondary-color, $secondary-as-bg-text-color);
 }
