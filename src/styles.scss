@@ -3,6 +3,8 @@ $secondary-color: white;
 $primary-as-bg-text-color: white;
 $secondary-as-bg-text-color: black;
 
+$link-color: #007bff;
+
 html,
 body {
   height: 100%;
@@ -17,6 +19,27 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $secondary-color;
+}
+
+a {
+  color: $link-color;
+  text-decoration: none;
+
+  &:link,
+  &:visited {
+    color: $link-color;
+    text-decoration: none;
+  }
+
+  &:hover {
+    color: darken($link-color, 20%);
+    text-decoration: underline;
+  }
+
+  &:active {
+    color: darken($link-color, 30%);
+    text-decoration: underline;
+  }
 }
 
 @mixin centerer($horizontal: true, $vertical: true) {
@@ -40,7 +63,7 @@ body {
 
 @mixin button($bg-color, $color) {
   background-color: $bg-color;
-  color: $color;
+  color: $color !important;
   text-decoration: none;
   padding: 10px;
   border-radius: 4px;
@@ -48,10 +71,12 @@ body {
 
   &:hover {
     background-color: darken($bg-color, 5%);
+    text-decoration: none;
   }
 
   &:active {
     background-color: darken($bg-color, 8%);
+    text-decoration: none;
   }
 }
 
