@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header.component';
-import { IndexComponent } from './index.component';
+import { HeaderComponent } from './header/header.component';
+import { IndexComponent } from './index/index.component';
 
 import {
   FontAwesomeModule,
@@ -24,6 +25,7 @@ import { environment } from '../environments/environment';
   declarations: [AppComponent, HeaderComponent, IndexComponent],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FontAwesomeModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
