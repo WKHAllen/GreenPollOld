@@ -14,9 +14,9 @@ interface RegisterForm {
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  submittingForm: boolean = false;
+  submittingForm = false;
+  registerSuccess = false;
   errors: string[] = [];
-  registerSuccess: boolean = false;
   model: RegisterForm = {
     username: '',
     email: '',

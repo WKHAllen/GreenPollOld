@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { IndexComponent } from './index/index.component';
 import { RegisterComponent } from './login-register/register.component';
+import { VerifyComponent } from './verify/verify.component';
+import { NotFoundComponent } from './error/not-found.component';
 
 import {
   FontAwesomeModule,
@@ -29,6 +31,8 @@ import { environment } from '../environments/environment';
     HeaderComponent,
     IndexComponent,
     RegisterComponent,
+    VerifyComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
