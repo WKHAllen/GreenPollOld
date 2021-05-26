@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { GenericResponse } from '../util';
+import { APIURL, GenericResponse } from '../util';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class LoginRegisterService {
   ): Promise<void> {
     return new Promise((resolve, reject) => {
       this.http
-        .get<GenericResponse>('/register', {
+        .get<GenericResponse>(APIURL + '/register', {
           params: { username, email, password },
         })
         .subscribe((res) => {
@@ -31,7 +31,9 @@ export class LoginRegisterService {
   public async login(email: string, password: string): Promise<void> {
     return new Promise((resolve, reject) => {
       this.http
-        .get<GenericResponse>('/login', { params: { email, password } })
+        .get<GenericResponse>(APIURL + '/login', {
+          params: { email, password },
+        })
         .subscribe((res) => {
           if (res.success) {
             resolve();
@@ -44,7 +46,7 @@ export class LoginRegisterService {
 
   public async logout(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.http.get<GenericResponse>('/logout').subscribe((res) => {
+      this.http.get<GenericResponse>(APIURL + '/logout').subscribe((res) => {
         if (res.success) {
           resolve();
         } else {
@@ -56,13 +58,15 @@ export class LoginRegisterService {
 
   public async logoutEverywhere(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.http.get<GenericResponse>('/logout_everywhere').subscribe((res) => {
-        if (res.success) {
-          resolve();
-        } else {
-          reject(res.error);
-        }
-      });
+      this.http
+        .get<GenericResponse>(APIURL + '/logout_everywhere')
+        .subscribe((res) => {
+          if (res.success) {
+            resolve();
+          } else {
+            reject(res.error);
+          }
+        });
     });
   }
 }

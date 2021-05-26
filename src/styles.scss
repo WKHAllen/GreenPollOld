@@ -107,3 +107,7 @@ a {
 .button-secondary {
   @include button($secondary-color, $secondary-as-bg-text-color);
 }
+
+.error-text {
+  color: red;
+}
