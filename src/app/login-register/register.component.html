@@ -1,1 +1,56 @@
-<h1>Register</h1>
+<h1 class="register-header">Register</h1>
+<form
+  #registerForm="ngForm"
+  (ngSubmit)="onSubmit(registerForm.value)"
+  class="login-form"
+>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      maxlength="63"
+      required
+      ngModel
+    />
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      maxlength="63"
+      required
+      ngModel
+    />
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      maxlength="255"
+      required
+      ngModel
+    />
+  </div>
+  <div class="form-group">
+    <label for="confirmPassword">Confirm password</label>
+    <input
+      type="password"
+      id="confirmPassword"
+      name="confirmPassword"
+      maxlength="255"
+      required
+      ngModel
+    />
+  </div>
+  <button type="submit" class="button-primary">Register</button>
+</form>
+<small
+  >If you already have an account, please
+  <a href="/login">log in here</a>.</small
+>

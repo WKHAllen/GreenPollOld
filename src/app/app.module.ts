@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { IndexComponent } from './index/index.component';
+import { RegisterComponent } from './login-register/register.component';
 
 import {
   FontAwesomeModule,
@@ -22,9 +24,15 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, IndexComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    IndexComponent,
+    RegisterComponent,
+  ],
   imports: [
     BrowserModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule,
     FontAwesomeModule,

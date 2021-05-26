@@ -5,6 +5,12 @@ $secondary-as-bg-text-color: black;
 
 $link-color: #007bff;
 
+* {
+  font-family: "Quicksand", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 html,
 body {
   height: 100%;
@@ -13,12 +19,37 @@ body {
 
 body {
   margin: 0;
-  font-family: "Quicksand", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: $secondary-color;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2.25rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.75rem;
+}
+
+h5 {
+  font-size: 1.5rem;
+}
+
+h6 {
+  font-size: 1.25rem;
 }
 
 a {
@@ -39,6 +70,37 @@ a {
   &:active {
     color: darken($link-color, 30%);
     text-decoration: underline;
+  }
+}
+
+small {
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+button.disabled,
+button:disabled {
+  opacity: 0.65;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"] {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  border: 2px solid black;
+  border-radius: 6px;
+  outline: none;
+  transition: 0.2s;
+
+  &:focus {
+    border: 2px solid $primary-color;
   }
 }
 
@@ -66,17 +128,23 @@ a {
   color: $color !important;
   text-decoration: none;
   padding: 10px;
+  border: 0;
   border-radius: 4px;
+  vertical-align: middle;
   transition: 0.2s;
 
-  &:hover {
-    background-color: darken($bg-color, 5%);
-    text-decoration: none;
-  }
+  &:not(:disabled) {
+    cursor: pointer;
 
-  &:active {
-    background-color: darken($bg-color, 8%);
-    text-decoration: none;
+    &:hover {
+      background-color: darken($bg-color, 5%);
+      text-decoration: none;
+    }
+
+    &:active {
+      background-color: darken($bg-color, 8%);
+      text-decoration: none;
+    }
   }
 }
 
@@ -86,4 +154,21 @@ a {
 
 .button-secondary {
   @include button($secondary-color, $secondary-as-bg-text-color);
+}
+
+@mixin margin($margin-top, $margin-bottom) {
+  $margin-scalar: 0.25rem;
+  margin-top: $margin-scalar * $margin-top;
+  margin-bottom: $margin-scalar * $margin-bottom;
+}
+
+.form-group {
+  @include margin(0, 3);
+
+  label {
+    display: inline-block;
+    margin-bottom: 0.375rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
 }
