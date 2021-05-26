@@ -17,12 +17,6 @@ export class RegisterComponent {
   submittingForm = false;
   registerSuccess = false;
   errors: string[] = [];
-  model: RegisterForm = {
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  };
 
   constructor(private loginRegisterService: LoginRegisterService) {}
 

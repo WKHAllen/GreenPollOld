@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { IndexComponent } from './index/index.component';
 import { RegisterComponent } from './login-register/register.component';
+import { LoginComponent } from './login-register/login.component';
 import { VerifyComponent } from './verify/verify.component';
 import { NotFoundComponent } from './error/not-found.component';
 
@@ -31,6 +32,7 @@ import { environment } from '../environments/environment';
     HeaderComponent,
     IndexComponent,
     RegisterComponent,
+    LoginComponent,
     VerifyComponent,
     NotFoundComponent,
   ],
