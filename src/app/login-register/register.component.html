@@ -2,12 +2,13 @@
 <form
   #registerForm="ngForm"
   (ngSubmit)="onSubmit(registerForm.value)"
-  class="login-form"
+  class="mb-3"
 >
   <div class="form-group">
-    <label for="username">Username</label>
+    <label for="username" class="form-label">Username</label>
     <input
       type="text"
+      class="form-control"
       id="username"
       name="username"
       maxlength="63"
@@ -16,9 +17,10 @@
     />
   </div>
   <div class="form-group">
-    <label for="email">Email</label>
+    <label for="email" class="form-label">Email</label>
     <input
       type="email"
+      class="form-control"
       id="email"
       name="email"
       maxlength="63"
@@ -27,9 +29,10 @@
     />
   </div>
   <div class="form-group">
-    <label for="password">Password</label>
+    <label for="password" class="form-label">Password</label>
     <input
       type="password"
+      class="form-control"
       id="password"
       name="password"
       maxlength="255"
@@ -38,9 +41,10 @@
     />
   </div>
   <div class="form-group">
-    <label for="confirmPassword">Confirm password</label>
+    <label for="confirmPassword" class="form-label">Confirm password</label>
     <input
       type="password"
+      class="form-control"
       id="confirmPassword"
       name="confirmPassword"
       maxlength="255"
@@ -48,7 +52,7 @@
       ngModel
     />
   </div>
-  <button type="submit" class="button-primary">Register</button>
+  <button type="submit" class="btn button-primary mt-1">Register</button>
 </form>
 <small
   >If you already have an account, please
