@@ -6,6 +6,7 @@ import { RegisterComponent } from './login-register/register.component';
 import { LoginComponent } from './login-register/login.component';
 import { LogoutComponent } from './login-register/logout.component';
 import { VerifyComponent } from './verify/verify.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { NotFoundComponent } from './error/not-found.component';
 
 const routes: Routes = [
@@ -14,6 +15,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'verify/:verifyID', component: VerifyComponent },
+  { path: 'password-reset', component: PasswordResetComponent },
+  { path: 'password-reset/:resetID', component: PasswordResetComponent },
   { path: '**', component: NotFoundComponent },
 ];
 

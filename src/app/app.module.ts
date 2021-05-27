@@ -11,6 +11,7 @@ import { RegisterComponent } from './login-register/register.component';
 import { LoginComponent } from './login-register/login.component';
 import { LogoutComponent } from './login-register/logout.component';
 import { VerifyComponent } from './verify/verify.component';
+import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { NotFoundComponent } from './error/not-found.component';
 
 import {
@@ -36,6 +37,7 @@ import { environment } from '../environments/environment';
     LoginComponent,
     LogoutComponent,
     VerifyComponent,
+    PasswordResetComponent,
     NotFoundComponent,
   ],
   imports: [
