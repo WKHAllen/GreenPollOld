@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 import { APIURL, GenericResponse } from '../util';
 
 @Injectable({
@@ -7,6 +8,7 @@ import { APIURL, GenericResponse } from '../util';
 })
 export class LoginRegisterService {
   private loggedInName = 'loggedIn';
+  loggedInChange = new Subject<boolean>();
 
   constructor(private http: HttpClient) {}
 
@@ -89,5 +91,6 @@ export class LoginRegisterService {
 
   private setLoggedIn(loggedIn: boolean): void {
     localStorage.setItem(this.loggedInName, String(loggedIn));
+    this.loggedInChange.next(loggedIn);
   }
 }

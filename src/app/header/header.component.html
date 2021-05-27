@@ -4,7 +4,7 @@
     <h5>GreenPoll</h5>
   </a>
   <nav>
-    <ul class="nav-links">
+    <ul *ngIf="loggedIn" class="nav-links">
       <li>
         <a routerLink="/new">
           <fa-icon icon="plus"></fa-icon>
@@ -18,6 +18,13 @@
       <li>
         <a routerLink="/logout">
           <fa-icon icon="sign-out-alt"></fa-icon>
+        </a>
+      </li>
+    </ul>
+    <ul *ngIf="!loggedIn" class="nav-links">
+      <li>
+        <a routerLink="/login">
+          <fa-icon icon="sign-in-alt"></fa-icon>
         </a>
       </li>
     </ul>
