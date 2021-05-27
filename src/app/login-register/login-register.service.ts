@@ -6,6 +6,8 @@ import { APIURL, GenericResponse } from '../util';
   providedIn: 'root',
 })
 export class LoginRegisterService {
+  private loggedInName = 'loggedIn';
+
   constructor(private http: HttpClient) {}
 
   public async register(
@@ -38,6 +40,7 @@ export class LoginRegisterService {
         })
         .subscribe((res) => {
           if (res.success) {
+            this.setLoggedIn(true);
             resolve();
           } else {
             reject(res.error);
@@ -54,6 +57,7 @@ export class LoginRegisterService {
         })
         .subscribe((res) => {
           if (res.success) {
+            this.setLoggedIn(false);
             resolve();
           } else {
             reject(res.error);
@@ -70,11 +74,20 @@ export class LoginRegisterService {
         })
         .subscribe((res) => {
           if (res.success) {
+            this.setLoggedIn(false);
             resolve();
           } else {
             reject(res.error);
           }
         });
     });
+  }
+
+  public loggedIn(): boolean {
+    return localStorage.getItem(this.loggedInName) === 'true';
+  }
+
+  private setLoggedIn(loggedIn: boolean): void {
+    localStorage.setItem(this.loggedInName, String(loggedIn));
   }
 }
