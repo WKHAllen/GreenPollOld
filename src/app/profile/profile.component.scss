@@ -1,0 +1,26 @@
+.user-info {
+  padding-inline-start: 0;
+  text-align: center;
+}
+
+.user-info li {
+  list-style: none;
+  display: inline;
+}
+
+.user-info li:after {
+  content: " \2022  ";
+  padding: 0 8px;
+}
+
+.user-info li:last-child:after {
+  content: none;
+}
+
+.user-info-error {
+  text-align: center;
+}
+
+.profile-form-group {
+  margin-bottom: 0.75rem;
+}

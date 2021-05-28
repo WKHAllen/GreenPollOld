@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { APIURL, GenericResponse } from '../util';
 
-interface UserInfo {
+export interface UserInfo {
   id?: number;
   username?: string;
   email?: string;
