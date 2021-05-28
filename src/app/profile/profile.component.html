@@ -7,6 +7,9 @@
   <li>{{ userInfo.email }}</li>
   <li>{{ userInfo.join_time | date }}</li>
 </ul>
+<p *ngIf="!userInfo && !userInfoError" class="fetching-user-info">
+  Fetching user info...
+</p>
 <div class="profile-form-group">
   <h3>Change your username</h3>
   <form
