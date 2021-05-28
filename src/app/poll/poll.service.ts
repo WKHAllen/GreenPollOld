@@ -250,4 +250,55 @@ export class PollService {
         });
     });
   }
+
+  public async pollVote(pollOptionID: number): Promise<PollVoteInfo> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<PollVoteInfo>(APIURL + '/poll_vote', {
+          params: { poll_option_id: pollOptionID },
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!res.error) {
+            resolve(res);
+          } else {
+            reject(res.error);
+          }
+        });
+    });
+  }
+
+  public async pollUnvote(pollID: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<PollVoteInfo>(APIURL + '/poll_unvote', {
+          params: { poll_id: pollID },
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!res.error) {
+            resolve();
+          } else {
+            reject(res.error);
+          }
+        });
+    });
+  }
+
+  public async getPollVotePoll(pollVoteID: number): Promise<PollInfo> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<PollInfo>(APIURL + '/get_poll_vote_poll', {
+          params: { poll_vote_id: pollVoteID },
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!res.error) {
+            resolve(res);
+          } else {
+            reject(res.error);
+          }
+        });
+    });
+  }
 }
