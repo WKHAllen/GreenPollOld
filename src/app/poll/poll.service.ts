@@ -11,18 +11,20 @@ export interface PollInfo {
   error?: string;
 }
 
-export interface PollOption {
-  id: number;
-  poll_id: number;
-  value: string;
+export interface PollOptionInfo {
+  id?: number;
+  poll_id?: number;
+  value?: string;
+  error?: string;
 }
 
-export interface PollVote {
-  id: number;
-  user_id: number;
-  poll_id: number;
-  poll_option_id: number;
-  vote_time: number;
+export interface PollVoteInfo {
+  id?: number;
+  user_id?: number;
+  poll_id?: number;
+  poll_option_id?: number;
+  vote_time?: number;
+  error?: string;
 }
 
 @Injectable({
@@ -68,10 +70,10 @@ export class PollService {
     });
   }
 
-  public async getPollOptions(pollID: number): Promise<PollOption[]> {
+  public async getPollOptions(pollID: number): Promise<PollOptionInfo[]> {
     return new Promise((resolve, reject) => {
       this.http
-        .get<PollOption[]>(APIURL + '/get_poll_options', {
+        .get<PollOptionInfo[]>(APIURL + '/get_poll_options', {
           params: { poll_id: pollID },
           withCredentials: true,
         })
@@ -85,10 +87,10 @@ export class PollService {
     });
   }
 
-  public async getPollVotes(pollID: number): Promise<PollVote[]> {
+  public async getPollVotes(pollID: number): Promise<PollVoteInfo[]> {
     return new Promise((resolve, reject) => {
       this.http
-        .get<PollVote[]>(APIURL + '/get_poll_votes', {
+        .get<PollVoteInfo[]>(APIURL + '/get_poll_votes', {
           params: { poll_id: pollID },
           withCredentials: true,
         })
@@ -144,6 +146,99 @@ export class PollService {
       this.http
         .get<GenericResponse>(APIURL + '/delete_poll', {
           params: { poll_id: pollID },
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!res.error) {
+            resolve();
+          } else {
+            reject(res.error);
+          }
+        });
+    });
+  }
+
+  public async createPollOption(
+    pollID: number,
+    value: string
+  ): Promise<PollOptionInfo> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<PollOptionInfo>(APIURL + '/create_poll_option', {
+          params: { poll_id: pollID, value },
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!res.error) {
+            resolve(res);
+          } else {
+            reject(res.error);
+          }
+        });
+    });
+  }
+
+  public async getPollOptionInfo(
+    pollOptionID: number
+  ): Promise<PollOptionInfo> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<PollOptionInfo>(APIURL + '/get_poll_option_info', {
+          params: { poll_option_id: pollOptionID },
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!res.error) {
+            resolve(res);
+          } else {
+            reject(res.error);
+          }
+        });
+    });
+  }
+
+  public async setPollOptionValue(
+    pollOptionID: number,
+    value: string
+  ): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<GenericResponse>(APIURL + '/set_poll_option_value', {
+          params: { poll_option_id: pollOptionID, new_value: value },
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!res.error) {
+            resolve();
+          } else {
+            reject(res.error);
+          }
+        });
+    });
+  }
+
+  public async getPollOptionPoll(pollOptionID: number): Promise<PollInfo> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<PollInfo>(APIURL + '/get_poll_option_poll', {
+          params: { poll_option_id: pollOptionID },
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!res.error) {
+            resolve(res);
+          } else {
+            reject(res.error);
+          }
+        });
+    });
+  }
+
+  public async deletePollOption(pollOptionID: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<GenericResponse>(APIURL + '/delete_poll_option', {
+          params: { poll_option_id: pollOptionID },
           withCredentials: true,
         })
         .subscribe((res) => {
