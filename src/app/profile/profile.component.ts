@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProfileService, UserInfo } from './profile.service';
+import { LoginRegisterService } from '../login-register/login-register.service';
 
 interface SetUsernameForm {
   username: string;
@@ -20,10 +22,16 @@ export class ProfileComponent implements OnInit {
   userInfoError = '';
   submittingUsernameForm = false;
   submittingPasswordForm = false;
+  logoutEverywhereClicked = false;
   setUsernameError = '';
   setPasswordError = '';
+  logoutEverywhereError = '';
 
-  constructor(private profileService: ProfileService) {}
+  constructor(
+    private profileService: ProfileService,
+    private loginRegisterService: LoginRegisterService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.profileService
@@ -84,5 +92,18 @@ export class ProfileComponent implements OnInit {
           this.setPasswordError = err;
         });
     }
+  }
+
+  logoutEverywhere() {
+    this.logoutEverywhereError = '';
+    this.logoutEverywhereClicked = true;
+
+    this.loginRegisterService
+      .logoutEverywhere()
+      .then(() => this.router.navigate(['/']))
+      .catch((err) => {
+        this.logoutEverywhereClicked = false;
+        this.logoutEverywhereError = err;
+      });
   }
 }

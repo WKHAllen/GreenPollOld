@@ -34,9 +34,9 @@
       Change username
     </button>
     <div class="mb-2">
-      <small *ngIf="setUsernameError" class="error-text">{{
-        setUsernameError
-      }}</small>
+      <small *ngIf="setUsernameError" class="error-text">
+        {{ setUsernameError }}
+      </small>
     </div>
   </form>
 </div>
@@ -80,9 +80,28 @@
       Change password
     </button>
     <div class="mb-2">
-      <small *ngIf="setPasswordError" class="error-text">{{
-        setPasswordError
-      }}</small>
+      <small *ngIf="setPasswordError" class="error-text">
+        {{ setPasswordError }}
+      </small>
     </div>
   </form>
+</div>
+<div class="profile-form-group">
+  <h3>Log out everywhere</h3>
+  <p class="logout-everywhere-info">
+    This will log you out of your account everywhere, on all devices.
+  </p>
+  <button
+    type="button"
+    class="btn button-primary mt-1 mb-2"
+    (click)="logoutEverywhere()"
+    [disabled]="logoutEverywhereClicked"
+  >
+    Log out everywhere
+  </button>
+  <div class="mb-2">
+    <small *ngIf="logoutEverywhereError" class="error-text">
+      {{ logoutEverywhereError }}
+    </small>
+  </div>
 </div>
