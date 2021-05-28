@@ -28,3 +28,13 @@
 .logout-everywhere-info {
   margin-bottom: 0.5rem;
 }
+
+.success-message {
+  padding-left: 0.75rem;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.success-message.success-show {
+  opacity: 1;
+}

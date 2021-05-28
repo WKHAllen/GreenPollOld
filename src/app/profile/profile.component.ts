@@ -26,6 +26,8 @@ export class ProfileComponent implements OnInit {
   setUsernameError = '';
   setPasswordError = '';
   logoutEverywhereError = '';
+  showUsernameSuccess = false;
+  showPasswordSuccess = false;
 
   constructor(
     private profileService: ProfileService,
@@ -61,6 +63,11 @@ export class ProfileComponent implements OnInit {
         .then(() => {
           this.submittingUsernameForm = false;
           this.ngOnInit();
+          this.showUsernameSuccess = true;
+
+          setTimeout(() => {
+            this.showUsernameSuccess = false;
+          }, 3000);
         })
         .catch((err) => {
           this.submittingUsernameForm = false;
@@ -86,6 +93,11 @@ export class ProfileComponent implements OnInit {
         .setPassword(form.password)
         .then(() => {
           this.submittingPasswordForm = false;
+          this.showPasswordSuccess = true;
+
+          setTimeout(() => {
+            this.showPasswordSuccess = false;
+          }, 3000);
         })
         .catch((err) => {
           this.submittingPasswordForm = false;

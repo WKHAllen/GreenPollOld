@@ -108,6 +108,10 @@ a {
   @include button($secondary-color, $secondary-as-bg-text-color);
 }
 
+.success-text {
+  color: $primary-color;
+}
+
 .error-text {
   color: red;
 }

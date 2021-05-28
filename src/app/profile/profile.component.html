@@ -33,6 +33,11 @@
     >
       Change username
     </button>
+    <small
+      class="success-message success-text"
+      [ngClass]="{ 'success-show': showUsernameSuccess === true }"
+      >Success</small
+    >
     <div class="mb-2">
       <small *ngIf="setUsernameError" class="error-text">
         {{ setUsernameError }}
@@ -79,6 +84,11 @@
     >
       Change password
     </button>
+    <small
+      class="success-message success-text"
+      [ngClass]="{ 'success-show': showPasswordSuccess === true }"
+      >Success</small
+    >
     <div class="mb-2">
       <small *ngIf="setPasswordError" class="error-text">
         {{ setPasswordError }}
