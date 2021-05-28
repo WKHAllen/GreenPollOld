@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,7 @@ import { LogoutComponent } from './login-register/logout.component';
 import { VerifyComponent } from './verify/verify.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NewPollComponent } from './poll/new-poll.component';
 import { NotFoundComponent } from './error/not-found.component';
 
 import {
@@ -24,6 +25,7 @@ import {
   faUser,
   faSignOutAlt,
   faSignInAlt,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -40,11 +42,13 @@ import { environment } from '../environments/environment';
     VerifyComponent,
     PasswordResetComponent,
     ProfileComponent,
+    NewPollComponent,
     NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     FontAwesomeModule,
@@ -60,6 +64,6 @@ import { environment } from '../environments/environment';
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faPlus, faUser, faSignOutAlt, faSignInAlt);
+    library.addIcons(faPlus, faUser, faSignOutAlt, faSignInAlt, faTimes);
   }
 }
