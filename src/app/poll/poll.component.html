@@ -18,7 +18,16 @@
       option.value
     }}</label>
   </div>
-  <button type="submit" class="btn button-primary mt-2 mb-3">Cast vote</button>
+  <button type="submit" class="btn button-primary mt-2 mb-3 me-2">
+    Cast vote
+  </button>
+  <button
+    type="button"
+    class="btn button-secondary mt-2 mb-3"
+    (click)="onUnvote()"
+  >
+    Remove vote
+  </button>
 </form>
 <div *ngIf="pollVotes.length > 0" class="pie-chart">
   <canvas

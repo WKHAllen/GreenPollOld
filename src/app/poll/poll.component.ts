@@ -61,10 +61,27 @@ export class PollComponent implements OnInit {
   }
 
   onVoteSubmit() {
-    this.pollService
-      .pollVote(this.selectedOption)
-      .then((_) => this.updateInfo())
-      .catch((err) => (this.error = err));
+    if (this.selectedOption > 0) {
+      this.pollService
+        .pollVote(this.selectedOption)
+        .then((_) => this.updateInfo())
+        .catch((err) => (this.error = err));
+    }
+  }
+
+  onUnvote() {
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
+      const pollID = parseInt(paramMap.get('pollID') || '');
+
+      if (isNaN(pollID)) {
+        this.error = 'Missing value for pollID';
+      } else {
+        this.pollService
+          .pollUnvote(pollID)
+          .then(() => this.updateInfo())
+          .catch((err) => (this.error = err));
+      }
+    });
   }
 
   updateInfo() {
@@ -78,15 +95,27 @@ export class PollComponent implements OnInit {
           this.pollService.getPollInfo(pollID),
           this.pollService.getPollOptions(pollID),
           this.pollService.getPollVotes(pollID),
-          this.pollService.getUserVote(pollID),
         ])
-          .then(([pollInfo, pollOptions, pollVotes, userVote]) => {
+          .then(([pollInfo, pollOptions, pollVotes]) => {
             this.poll = pollInfo;
             this.pollOptions = pollOptions;
             this.pollVotes = pollVotes;
-            this.selectedOption = userVote.poll_option_id as number;
 
             this.updateVoteInfo();
+
+            this.pollService
+              .getUserVote(pollID)
+              .then(
+                (userVote) =>
+                  (this.selectedOption = userVote.poll_option_id as number)
+              )
+              .catch((err) => {
+                if (err === 'Poll vote does not exist') {
+                  this.selectedOption = 0;
+                } else {
+                  this.error = err;
+                }
+              });
           })
           .catch((err) => (this.error = err));
       }
