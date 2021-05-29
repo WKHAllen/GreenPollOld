@@ -7,6 +7,8 @@ import {
   PollVoteInfo,
   PollUserVoteInfo,
 } from './poll.service';
+import { ProfileService } from '../profile/profile.service';
+import { LoginRegisterService } from '../login-register/login-register.service';
 import { ChartType, ChartOptions } from 'chart.js';
 import {
   SingleDataSet,
@@ -28,6 +30,8 @@ export class PollComponent implements OnInit {
   pollVotes: PollVoteInfo[] = [];
   pollUserVotes: PollUserVoteInfo[] = [];
   selectedOption = 0;
+  loggedIn = false;
+  canEdit = false;
   error = '';
   refreshInterval = 60;
 
@@ -43,6 +47,8 @@ export class PollComponent implements OnInit {
 
   constructor(
     private pollService: PollService,
+    private profileService: ProfileService,
+    private loginRegisterService: LoginRegisterService,
     private activatedRoute: ActivatedRoute
   ) {}
 
@@ -50,6 +56,7 @@ export class PollComponent implements OnInit {
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
 
+    this.loggedIn = this.loginRegisterService.loggedIn();
     this.pieChartColors = [this.generateColors(5)];
 
     this.activatedRoute.paramMap.subscribe((paramMap) => {
@@ -107,19 +114,26 @@ export class PollComponent implements OnInit {
 
         this.updateVoteInfo();
 
-        this.pollService
-          .getUserVote(this.pollID)
-          .then(
-            (userVote) =>
-              (this.selectedOption = userVote.poll_option_id as number)
-          )
-          .catch((err) => {
-            if (err === 'Poll vote does not exist') {
-              this.selectedOption = 0;
-            } else {
-              this.error = err;
-            }
-          });
+        if (this.loggedIn) {
+          this.pollService
+            .getUserVote(this.pollID)
+            .then(
+              (userVote) =>
+                (this.selectedOption = userVote.poll_option_id as number)
+            )
+            .catch((err) => {
+              if (err === 'Poll vote does not exist') {
+                this.selectedOption = 0;
+              } else {
+                this.error = err;
+              }
+            });
+
+          this.profileService
+            .getUserInfo()
+            .then((user) => (this.canEdit = user.id === this.poll.user_id))
+            .catch((err) => (this.error = err));
+        }
       })
       .catch((err) => (this.error = err));
   }
