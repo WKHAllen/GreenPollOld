@@ -9,6 +9,7 @@ import { VerifyComponent } from './verify/verify.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NewPollComponent } from './poll/new-poll.component';
+import { PollComponent } from './poll/poll.component';
 import { NotFoundComponent } from './error/not-found.component';
 
 const routes: Routes = [
@@ -21,6 +22,8 @@ const routes: Routes = [
   { path: 'password-reset/:resetID', component: PasswordResetComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'new', component: NewPollComponent },
+  { path: 'poll/:pollID', component: PollComponent },
+  { path: 'poll', redirectTo: 'new' },
   { path: '**', component: NotFoundComponent },
 ];
 
