@@ -1,62 +1,68 @@
-<h1>{{ poll.title }}</h1>
+<h1>{{ poll.title || "Poll" }}</h1>
 <p class="poll-description">{{ poll.description }}</p>
 <p *ngIf="error" class="poll-error error-text">
   Error: <code>{{ error }}</code>
 </p>
-<h3>Options</h3>
-<form #voteForm="ngForm" (ngSubmit)="onVoteSubmit()">
-  <div *ngFor="let option of pollOptions" class="form-check">
-    <input
-      type="radio"
-      class="form-check-input"
-      id="option-{{ option.id }}"
-      name="vote-option"
-      [checked]="selectedOption === option.id"
-      (click)="select($event)"
-    />
-    <label class="form-check-label" for="option-{{ option.id }}">{{
-      option.value
-    }}</label>
+<div *ngIf="!error">
+  <button type="button" class="btn button-primary mb-3" (click)="updateInfo()">
+    Refresh
+  </button>
+  <h3>Options</h3>
+  <form #voteForm="ngForm" (ngSubmit)="onVoteSubmit()">
+    <div *ngFor="let option of pollOptions" class="form-check">
+      <input
+        type="radio"
+        class="form-check-input"
+        id="option-{{ option.id }}"
+        name="vote-option"
+        [checked]="selectedOption === option.id"
+        (click)="select($event)"
+      />
+      <label class="form-check-label" for="option-{{ option.id }}">{{
+        option.value
+      }}</label>
+    </div>
+    <button type="submit" class="btn button-primary mt-2 mb-3 me-2">
+      Cast vote
+    </button>
+    <button
+      type="button"
+      class="btn button-secondary mt-2 mb-3 unvote-button"
+      (click)="onUnvote()"
+      [disabled]="selectedOption === 0"
+    >
+      Remove vote
+    </button>
+  </form>
+  <div *ngIf="pollVotes.length > 0" class="pie-chart">
+    <h3>Votes</h3>
+    <canvas
+      baseChart
+      [data]="pieChartData"
+      [labels]="pieChartLabels"
+      [chartType]="pieChartType"
+      [options]="pieChartOptions"
+      [plugins]="pieChartPlugins"
+      [legend]="pieChartLegend"
+      [colors]="pieChartColors"
+    >
+    </canvas>
+    <h3>Voters</h3>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">User</th>
+          <th scope="col">Option</th>
+          <th scope="col">Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vote of pollUserVotes">
+          <td>{{ vote.username }}</td>
+          <td>{{ vote.poll_option_value }}</td>
+          <td>{{ vote.vote_time | date: "medium" }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <button type="submit" class="btn button-primary mt-2 mb-3 me-2">
-    Cast vote
-  </button>
-  <button
-    type="button"
-    class="btn button-secondary mt-2 mb-3"
-    (click)="onUnvote()"
-  >
-    Remove vote
-  </button>
-</form>
-<div *ngIf="pollVotes.length > 0" class="pie-chart">
-  <h3>Votes</h3>
-  <canvas
-    baseChart
-    [data]="pieChartData"
-    [labels]="pieChartLabels"
-    [chartType]="pieChartType"
-    [options]="pieChartOptions"
-    [plugins]="pieChartPlugins"
-    [legend]="pieChartLegend"
-    [colors]="pieChartColors"
-  >
-  </canvas>
-  <h3>Voters</h3>
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th scope="col">User</th>
-        <th scope="col">Option</th>
-        <th scope="col">Timestamp</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let vote of pollUserVotes">
-        <td>{{ vote.username }}</td>
-        <td>{{ vote.poll_option_value }}</td>
-        <td>{{ vote.vote_time | date: "medium" }}</td>
-      </tr>
-    </tbody>
-  </table>
 </div>

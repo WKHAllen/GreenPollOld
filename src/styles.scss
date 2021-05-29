@@ -105,7 +105,7 @@ a {
 }
 
 .button-secondary {
-  @include button($secondary-color, $secondary-as-bg-text-color);
+  @include button(darken($secondary-color, 5%), $secondary-as-bg-text-color);
 }
 
 .success-text {

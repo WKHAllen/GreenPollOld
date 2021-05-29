@@ -16,10 +16,6 @@ import {
   monkeyPatchChartJsTooltip,
 } from 'ng2-charts';
 
-interface VoteForm {
-  [voteOption: string]: any;
-}
-
 @Component({
   selector: 'gp-poll',
   templateUrl: './poll.component.html',
