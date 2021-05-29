@@ -5,6 +5,7 @@ import {
   PollInfo,
   PollOptionInfo,
   PollVoteInfo,
+  PollUserVoteInfo,
 } from './poll.service';
 import { ChartType, ChartOptions } from 'chart.js';
 import {
@@ -25,11 +26,14 @@ interface VoteForm {
   styleUrls: ['./poll.component.scss'],
 })
 export class PollComponent implements OnInit {
-  error = '';
+  pollID = 0;
   poll: PollInfo = {};
   pollOptions: PollOptionInfo[] = [];
   pollVotes: PollVoteInfo[] = [];
+  pollUserVotes: PollUserVoteInfo[] = [];
   selectedOption = 0;
+  error = '';
+  refreshInterval = 60;
 
   pieChartOptions: ChartOptions = {
     responsive: true,
@@ -51,7 +55,19 @@ export class PollComponent implements OnInit {
     monkeyPatchChartJsLegend();
 
     this.pieChartColors = [this.generateColors(5)];
-    this.updateInfo();
+
+    this.activatedRoute.paramMap.subscribe((paramMap) => {
+      const pollID = parseInt(paramMap.get('pollID') || '');
+
+      if (isNaN(pollID)) {
+        this.error = 'Missing value for pollID';
+      } else {
+        this.pollID = pollID;
+
+        this.updateInfo();
+        setInterval(() => this.updateInfo(), this.refreshInterval * 1000);
+      }
+    });
   }
 
   select(event: MouseEvent) {
@@ -70,56 +86,46 @@ export class PollComponent implements OnInit {
   }
 
   onUnvote() {
-    this.activatedRoute.paramMap.subscribe((paramMap) => {
-      const pollID = parseInt(paramMap.get('pollID') || '');
-
-      if (isNaN(pollID)) {
-        this.error = 'Missing value for pollID';
-      } else {
-        this.pollService
-          .pollUnvote(pollID)
-          .then(() => this.updateInfo())
-          .catch((err) => (this.error = err));
-      }
-    });
+    this.pollService
+      .pollUnvote(this.pollID)
+      .then(() => this.updateInfo())
+      .catch((err) => (this.error = err));
   }
 
   updateInfo() {
-    this.activatedRoute.paramMap.subscribe((paramMap) => {
-      const pollID = parseInt(paramMap.get('pollID') || '');
+    Promise.all([
+      this.pollService.getPollInfo(this.pollID),
+      this.pollService.getPollOptions(this.pollID),
+      this.pollService.getPollVotes(this.pollID),
+      this.pollService.getPollUserVotes(this.pollID),
+    ])
+      .then(([pollInfo, pollOptions, pollVotes, pollUserVotes]) => {
+        this.poll = pollInfo;
+        this.pollOptions = pollOptions;
+        this.pollVotes = pollVotes;
+        this.pollUserVotes = pollUserVotes.map((userVote) => ({
+          ...userVote,
+          vote_time: (userVote.vote_time as number) * 1000,
+        }));
+        this.pieChartColors = [this.generateColors(pollOptions.length)];
 
-      if (isNaN(pollID)) {
-        this.error = 'Missing value for pollID';
-      } else {
-        Promise.all([
-          this.pollService.getPollInfo(pollID),
-          this.pollService.getPollOptions(pollID),
-          this.pollService.getPollVotes(pollID),
-        ])
-          .then(([pollInfo, pollOptions, pollVotes]) => {
-            this.poll = pollInfo;
-            this.pollOptions = pollOptions;
-            this.pollVotes = pollVotes;
+        this.updateVoteInfo();
 
-            this.updateVoteInfo();
-
-            this.pollService
-              .getUserVote(pollID)
-              .then(
-                (userVote) =>
-                  (this.selectedOption = userVote.poll_option_id as number)
-              )
-              .catch((err) => {
-                if (err === 'Poll vote does not exist') {
-                  this.selectedOption = 0;
-                } else {
-                  this.error = err;
-                }
-              });
-          })
-          .catch((err) => (this.error = err));
-      }
-    });
+        this.pollService
+          .getUserVote(this.pollID)
+          .then(
+            (userVote) =>
+              (this.selectedOption = userVote.poll_option_id as number)
+          )
+          .catch((err) => {
+            if (err === 'Poll vote does not exist') {
+              this.selectedOption = 0;
+            } else {
+              this.error = err;
+            }
+          });
+      })
+      .catch((err) => (this.error = err));
   }
 
   updateVoteInfo() {

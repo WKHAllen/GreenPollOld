@@ -30,6 +30,7 @@
   </button>
 </form>
 <div *ngIf="pollVotes.length > 0" class="pie-chart">
+  <h3>Votes</h3>
   <canvas
     baseChart
     [data]="pieChartData"
@@ -41,4 +42,21 @@
     [colors]="pieChartColors"
   >
   </canvas>
+  <h3>Voters</h3>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col">Option</th>
+        <th scope="col">Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vote of pollUserVotes">
+        <td>{{ vote.username }}</td>
+        <td>{{ vote.poll_option_value }}</td>
+        <td>{{ vote.vote_time | date: "medium" }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
