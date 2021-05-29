@@ -78,11 +78,13 @@ export class PollComponent implements OnInit {
           this.pollService.getPollInfo(pollID),
           this.pollService.getPollOptions(pollID),
           this.pollService.getPollVotes(pollID),
+          this.pollService.getUserVote(pollID),
         ])
-          .then(([pollInfo, pollOptions, pollVotes]) => {
+          .then(([pollInfo, pollOptions, pollVotes, userVote]) => {
             this.poll = pollInfo;
             this.pollOptions = pollOptions;
             this.pollVotes = pollVotes;
+            this.selectedOption = userVote.poll_option_id as number;
 
             this.updateVoteInfo();
           })

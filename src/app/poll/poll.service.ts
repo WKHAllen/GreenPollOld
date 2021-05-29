@@ -301,4 +301,21 @@ export class PollService {
         });
     });
   }
+
+  public async getUserVote(pollID: number): Promise<PollVoteInfo> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<PollVoteInfo>(APIURL + '/get_user_vote', {
+          params: { poll_id: pollID },
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!res.error) {
+            resolve(res);
+          } else {
+            reject(res.error);
+          }
+        });
+    });
+  }
 }
