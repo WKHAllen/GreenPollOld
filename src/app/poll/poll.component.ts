@@ -25,6 +25,7 @@ import {
 })
 export class PollComponent implements OnInit {
   pollID = 0;
+  pollInfo = false;
   poll: PollInfo = {};
   pollOptions: PollOptionInfo[] = [];
   pollVotes: PollVoteInfo[] = [];
@@ -103,6 +104,7 @@ export class PollComponent implements OnInit {
       this.pollService.getPollUserVotes(this.pollID),
     ])
       .then(([pollInfo, pollOptions, pollVotes, pollUserVotes]) => {
+        this.pollInfo = true;
         this.poll = pollInfo;
         this.pollOptions = pollOptions;
         this.pollVotes = pollVotes;

@@ -3,7 +3,10 @@
 <p *ngIf="error" class="poll-error error-text">
   Error: <code>{{ error }}</code>
 </p>
-<div *ngIf="!error">
+<div *ngIf="!error && !pollInfo" class="fetching-poll-info">
+  Fetching poll info...
+</div>
+<div *ngIf="!error && pollInfo">
   <button type="button" class="btn button-primary mb-3" (click)="updateInfo()">
     Refresh
   </button>

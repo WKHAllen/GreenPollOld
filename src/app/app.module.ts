@@ -15,6 +15,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { ProfileComponent } from './profile/profile.component';
 import { NewPollComponent } from './poll/new-poll.component';
 import { PollComponent } from './poll/poll.component';
+import { EditPollComponent } from './poll/edit-poll.component';
 import { NotFoundComponent } from './error/not-found.component';
 
 import {
@@ -47,6 +48,7 @@ import { environment } from '../environments/environment';
     ProfileComponent,
     NewPollComponent,
     PollComponent,
+    EditPollComponent,
     NotFoundComponent,
   ],
   imports: [

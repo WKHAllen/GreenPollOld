@@ -2,10 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PollService } from './poll.service';
 
-interface NewPollOptionMap {
-  [rowNum: string]: string;
-}
-
 interface NewPollForm {
   title: string;
   description: string;
@@ -26,13 +22,9 @@ export class NewPollComponent {
   constructor(private pollService: PollService, private router: Router) {}
 
   onNewPollSubmit(form: NewPollForm) {
-    const options = [
-      form.pollOption1,
-      form.pollOption2,
-      form.pollOption3,
-      form.pollOption4,
-      form.pollOption5,
-    ].filter((value) => !!value);
+    const options = this.optionNums
+      .map((optionNum) => form[`pollOption${optionNum}`])
+      .filter((value) => !!value);
 
     this.errors = [];
 
