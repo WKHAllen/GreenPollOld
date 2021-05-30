@@ -18,7 +18,8 @@ interface SetPasswordForm {
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  userInfo: UserInfo | null = null;
+  userInfo: UserInfo = {};
+  newUsername: string = '';
   userInfoError = '';
   submittingUsernameForm = false;
   submittingPasswordForm = false;
@@ -41,6 +42,7 @@ export class ProfileComponent implements OnInit {
       .then((userInfo) => {
         this.userInfo = userInfo;
         this.userInfo.join_time = (userInfo.join_time as number) * 1000;
+        this.newUsername = userInfo.username as string;
       })
       .catch((err) => (this.userInfoError = err));
   }

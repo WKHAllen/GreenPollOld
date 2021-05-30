@@ -24,9 +24,8 @@
         id="username"
         name="username"
         maxlength="63"
-        value="{{ userInfo ? userInfo.username : '' }}"
         required
-        ngModel
+        [(ngModel)]="newUsername"
       />
     </div>
     <button
