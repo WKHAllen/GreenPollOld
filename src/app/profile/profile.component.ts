@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfileService, UserInfo } from './profile.service';
 import { LoginRegisterService } from '../login-register/login-register.service';
+import { PollInfo } from '../poll/poll.service';
 
 interface SetUsernameForm {
   username: string;
@@ -20,7 +21,11 @@ interface SetPasswordForm {
 export class ProfileComponent implements OnInit {
   userInfo: UserInfo = {};
   newUsername: string = '';
+  userPolls: PollInfo[] = [];
+  gotUserInfo = false;
+  gotUserPolls = false;
   userInfoError = '';
+  userPollsError = '';
   submittingUsernameForm = false;
   submittingPasswordForm = false;
   logoutEverywhereClicked = false;
@@ -46,6 +51,18 @@ export class ProfileComponent implements OnInit {
           this.userInfo = userInfo;
           this.userInfo.join_time = (userInfo.join_time as number) * 1000;
           this.newUsername = userInfo.username as string;
+          this.gotUserInfo = true;
+
+          this.profileService
+            .getUserPolls()
+            .then((userPolls) => {
+              this.userPolls = userPolls.map((poll) => ({
+                ...poll,
+                create_time: (poll.create_time as number) * 1000,
+              }));
+              this.gotUserPolls = true;
+            })
+            .catch((err) => (this.userPollsError = err));
         })
         .catch((err) => (this.userInfoError = err));
     }

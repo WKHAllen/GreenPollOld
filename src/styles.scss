@@ -100,6 +100,15 @@ a {
   }
 }
 
+@mixin line-cutoff($num-lines) {
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: $num-lines;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
 .button-primary {
   @include button($primary-color, $primary-as-bg-text-color);
 }

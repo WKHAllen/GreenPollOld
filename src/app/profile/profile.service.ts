@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { PollInfo } from '../poll/poll.service';
 import { APIURL, GenericResponse } from '../util';
 
 export interface UserInfo {
@@ -61,6 +62,22 @@ export class ProfileService {
             resolve();
           } else {
             reject(res.error);
+          }
+        });
+    });
+  }
+
+  public async getUserPolls(): Promise<PollInfo[]> {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get<PollInfo[]>(APIURL + '/get_user_polls', {
+          withCredentials: true,
+        })
+        .subscribe((res) => {
+          if (!('error' in res)) {
+            resolve(res);
+          } else {
+            reject(res['error']);
           }
         });
     });

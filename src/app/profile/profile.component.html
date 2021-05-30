@@ -2,12 +2,12 @@
 <p *ngIf="userInfoError" class="user-info-error error-text">
   Error: <code>{{ userInfoError }}</code>
 </p>
-<ul *ngIf="userInfo" class="user-info">
+<ul *ngIf="gotUserInfo" class="user-info">
   <li>{{ userInfo.username }}</li>
   <li>{{ userInfo.email }}</li>
   <li>{{ userInfo.join_time | date }}</li>
 </ul>
-<p *ngIf="!userInfo && !userInfoError" class="fetching-user-info">
+<p *ngIf="!gotUserInfo && !userInfoError" class="fetching-user-info">
   Fetching user info...
 </p>
 <div class="profile-form-group">
@@ -116,4 +116,36 @@
       {{ logoutEverywhereError }}
     </small>
   </div>
+</div>
+<div>
+  <h3>Your Polls</h3>
+  <p *ngIf="!gotUserPolls" class="fetching-user-polls">
+    Fetching your polls...
+  </p>
+  <div *ngIf="gotUserPolls">
+    <small *ngIf="userPollsError" class="error-text">
+      {{ userPollsError }}
+    </small>
+    <p *ngIf="!userPollsError && userPolls.length === 0" class="no-polls-info">
+      You have not yet created any polls.
+    </p>
+    <div *ngIf="!userPollsError && userPolls.length > 0" class="row mt-1 mb-2">
+      <div *ngFor="let poll of userPolls" class="col-12 col-sm-4">
+        <div class="poll-card-container">
+          <a routerLink="/poll/{{ poll.id }}">
+            <div class="card poll-card">
+              <div class="card-body">
+                <h5 class="card-title">{{ poll.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                  {{ poll.create_time | date }}
+                </h6>
+                <p class="card-text">{{ poll.description }}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a routerLink="/new" class="btn button-primary mt-1">New poll</a>
 </div>
