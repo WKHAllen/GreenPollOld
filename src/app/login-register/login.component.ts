@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { LoginRegisterService } from './login-register.service';
 
 interface LoginForm {
@@ -12,14 +12,22 @@ interface LoginForm {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   submittingForm = false;
   error = '';
+  after = '';
 
   constructor(
     private loginRegisterService: LoginRegisterService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
+
+  ngOnInit() {
+    this.activatedRoute.queryParamMap.subscribe((queryParams) => {
+      this.after = queryParams.get('after') || '';
+    });
+  }
 
   onSubmit(form: LoginForm) {
     this.error = '';
@@ -27,7 +35,7 @@ export class LoginComponent {
 
     this.loginRegisterService
       .login(form.email, form.password)
-      .then(() => this.router.navigate(['/']))
+      .then(() => this.router.navigate([this.after || '/']))
       .catch((err) => {
         this.submittingForm = false;
         this.error = err;

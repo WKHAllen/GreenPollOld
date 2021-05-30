@@ -37,14 +37,18 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.profileService
-      .getUserInfo()
-      .then((userInfo) => {
-        this.userInfo = userInfo;
-        this.userInfo.join_time = (userInfo.join_time as number) * 1000;
-        this.newUsername = userInfo.username as string;
-      })
-      .catch((err) => (this.userInfoError = err));
+    if (!this.loginRegisterService.loggedIn()) {
+      this.router.navigate(['login'], { queryParams: { after: 'profile' } });
+    } else {
+      this.profileService
+        .getUserInfo()
+        .then((userInfo) => {
+          this.userInfo = userInfo;
+          this.userInfo.join_time = (userInfo.join_time as number) * 1000;
+          this.newUsername = userInfo.username as string;
+        })
+        .catch((err) => (this.userInfoError = err));
+    }
   }
 
   onSetUsernameSubmit(form: SetUsernameForm) {

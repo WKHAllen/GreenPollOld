@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PollService } from './poll.service';
+import { LoginRegisterService } from '../login-register/login-register.service';
 
 interface NewPollForm {
   title: string;
@@ -13,13 +14,23 @@ interface NewPollForm {
   templateUrl: './new-poll.component.html',
   styleUrls: ['./new-poll.component.scss'],
 })
-export class NewPollComponent {
+export class NewPollComponent implements OnInit {
   maxOptions = 5;
   optionNums = Array.from({ length: this.maxOptions }, (_, i) => i + 1);
   submittingForm = false;
   errors: string[] = [];
 
-  constructor(private pollService: PollService, private router: Router) {}
+  constructor(
+    private pollService: PollService,
+    private loginRegisterService: LoginRegisterService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    if (!this.loginRegisterService.loggedIn()) {
+      this.router.navigate(['login'], { queryParams: { after: 'new' } });
+    }
+  }
 
   onNewPollSubmit(form: NewPollForm) {
     const options = this.optionNums
