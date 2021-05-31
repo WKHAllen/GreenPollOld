@@ -6,24 +6,24 @@
   <nav>
     <ul *ngIf="loggedIn" class="nav-links">
       <li>
-        <a routerLink="/new">
+        <a routerLink="/new" aria-label="New poll">
           <fa-icon icon="plus"></fa-icon>
         </a>
       </li>
       <li>
-        <a routerLink="/profile">
+        <a routerLink="/profile" aria-label="Profile">
           <fa-icon icon="user"></fa-icon>
         </a>
       </li>
       <li>
-        <a routerLink="/logout">
+        <a routerLink="/logout" aria-label="Logout">
           <fa-icon icon="sign-out-alt"></fa-icon>
         </a>
       </li>
     </ul>
     <ul *ngIf="!loggedIn" class="nav-links">
       <li>
-        <a routerLink="/login">
+        <a routerLink="/login" aria-label="Login">
           <fa-icon icon="sign-in-alt"></fa-icon>
         </a>
       </li>
