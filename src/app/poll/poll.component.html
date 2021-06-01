@@ -7,14 +7,20 @@
   Fetching poll info...
 </div>
 <div *ngIf="!error && pollInfo">
-  <button type="button" class="btn button-primary mb-3" (click)="updateInfo()">
-    Refresh
+  <button
+    type="button"
+    class="btn button-primary mb-3"
+    (click)="copyPollLink()"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    title="Click to copy poll URL"
+  >
+    Share
   </button>
   <a
     *ngIf="canEdit"
     routerLink="/edit/{{ poll.id }}"
     class="btn button-secondary mb-3 ms-2"
-    (click)="updateInfo()"
   >
     Edit poll
   </a>
